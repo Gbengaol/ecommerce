@@ -27,7 +27,7 @@ const StripeCheckoutButton = ({ price }) => {
   return (
     <StripeCheckout
       label='Pay Now'
-      name='CRWN Clothing Ltd.'
+      name='Gbenga Ecommerce App.'
       billingAddress
       shippingAddress
       image='https://svgshare.com/i/CUz.svg'
