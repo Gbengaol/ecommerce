@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-// import './App.css';
+import './App.scss';
 
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
@@ -9,8 +9,6 @@ import CheckoutPage from './pages/checkout/checkout.component';
 import Header from './components/header/header.component';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-
-import { GlobalStyle } from './global.styles';
 
 import CurrentUserContext from './context/currentUser/CurrentUser.context';
 
@@ -50,7 +48,6 @@ class App extends React.Component {
     return (
       <div>
         <CurrentUserContext.Provider value={this.state.currentUser}>
-          <GlobalStyle />
           <Header />
         </CurrentUserContext.Provider>
         <Switch>

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect }  from 'react';
+import React, { createContext, useState, useEffect, memo }  from 'react';
 import { 
     addItemToCart, 
     removeItemFromCart, 
@@ -7,18 +7,9 @@ import {
     cartTotalAmount
 } from './cart.utils';
 
-export const CartContext = createContext({
-    // hidden: true,
-    // toggleHidden: () => {},
-    // addItem: () => {},
-    // removeItem: () => {},
-    // cartItemsCount: 0,
-    // cartItems: [],
-    // clearItemFromCart: () => {},
-    // cartItemsTotal: 0
-});
+export const CartContext = createContext();
 
-const CartProvider = ({ children }) => {
+const CartProvider = memo(({ children }) => {
     const [hidden, setHidden] = useState(true); 
     const [cartItems, setCartItems] = useState([]);
     const [cartItemsCount, setCartItemsCount ] = useState(0);
@@ -46,6 +37,6 @@ const CartProvider = ({ children }) => {
             {children}
         </CartContext.Provider>
     )
-}
+})
 
 export default CartProvider;
