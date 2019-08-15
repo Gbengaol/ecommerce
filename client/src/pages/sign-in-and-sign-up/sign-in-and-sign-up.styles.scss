@@ -1,6 +1,33 @@
 .sign-in-and-sign-up {
-  width: 850px;
-  display: flex;
+  width: 40%;
+  display: grid;
   justify-content: space-between;
+  grid-template-columns: 1fr;
   margin: 30px auto;
+
+  @media screen and (max-width: 800px) {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    margin-bottom: 0px;
+  }
+}
+
+.toggle {
+  display: flex;
+  justify-content: space-evenly;
+
+  h3 {
+    cursor: pointer;
+  }
+}
+
+.center {
+  justify-content: center;
+  text-align: center;
+}
+
+.colorize {
+  color: red;
+  border-bottom: 2px solid;
 }
