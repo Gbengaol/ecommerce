@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.scss';
 
-import HomePage from './pages/homepage/homepage.component';
-import ShopPage from './pages/shop/shop.component';
-import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
-import CheckoutPage from './pages/checkout/checkout.component';
-import Header from './components/header/header.component';
+import PreLoader from './preloader';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 import CurrentUserContext from './context/currentUser/CurrentUser.context';
+
+const HomePage = lazy(() => import('./pages/homepage/homepage.component'));
+const ShopPage = lazy(() => import('./pages/shop/shop.component')) ;
+const SignInAndSignUpPage = lazy(() => import('./pages/sign-in-and-sign-up/sign-in-and-sign-up.component'));
+const CheckoutPage = lazy(() => import('./pages/checkout/checkout.component'));
+const Header = lazy(() => import('./components/header/header.component'));
 
 class App extends React.Component {
   constructor(){
@@ -47,25 +49,30 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <CurrentUserContext.Provider value={this.state.currentUser}>
-          <Header />
-        </CurrentUserContext.Provider>
-        <Switch>
-          <Route exact path='/' component={HomePage} />
-          <Route path='/shop' component={ShopPage} />
-          <Route exact path='/checkout' component={CheckoutPage} />
-          <Route
-            exact
-            path='/signin'
-            render={() =>
-              this.state.currentUser ? (
-                <Redirect to='/' />
-              ) : (
-                <SignInAndSignUpPage />
-              )
-            }
-          />
-        </Switch>
+        <Suspense fallback={<PreLoader />}>
+          <div id='stars'></div>
+          <div id='stars2'></div>
+          <div id='stars3'></div>
+          <CurrentUserContext.Provider value={this.state.currentUser}>
+            <Header />
+          </CurrentUserContext.Provider>
+          <Switch>
+            <Route exact path='/' component={HomePage} />
+            <Route path='/shop' component={ShopPage} />
+            <Route exact path='/checkout' component={CheckoutPage} />
+            <Route
+              exact
+              path='/signin'
+              render={() =>
+                this.state.currentUser ? (
+                  <Redirect to='/' />
+                ) : (
+                  <SignInAndSignUpPage />
+                )
+              }
+            />
+          </Switch>
+        </Suspense>
       </div>
     );
   }
