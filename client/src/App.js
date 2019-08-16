@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.scss';
 
 import PreLoader from './preloader';
+import ErrorBoundary from './components/error-boundary/error-boundary.component';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
@@ -49,30 +50,32 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Suspense fallback={<PreLoader />}>
-          <div id='stars'></div>
-          <div id='stars2'></div>
-          <div id='stars3'></div>
-          <CurrentUserContext.Provider value={this.state.currentUser}>
-            <Header />
-          </CurrentUserContext.Provider>
-          <Switch>
-            <Route exact path='/' component={HomePage} />
-            <Route path='/shop' component={ShopPage} />
-            <Route exact path='/checkout' component={CheckoutPage} />
-            <Route
-              exact
-              path='/signin'
-              render={() =>
-                this.state.currentUser ? (
-                  <Redirect to='/' />
-                ) : (
-                  <SignInAndSignUpPage />
-                )
-              }
-            />
-          </Switch>
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<PreLoader />}>
+            <div id='stars'></div>
+            <div id='stars2'></div>
+            <div id='stars3'></div>
+            <CurrentUserContext.Provider value={this.state.currentUser}>
+              <Header />
+            </CurrentUserContext.Provider>
+            <Switch>
+              <Route exact path='/' component={HomePage} />
+              <Route path='/shop' component={ShopPage} />
+              <Route exact path='/checkout' component={CheckoutPage} />
+              <Route
+                exact
+                path='/signin'
+                render={() =>
+                  this.state.currentUser ? (
+                    <Redirect to='/' />
+                  ) : (
+                    <SignInAndSignUpPage />
+                  )
+                }
+              />
+            </Switch>
+          </Suspense>
+          </ErrorBoundary>
       </div>
     );
   }

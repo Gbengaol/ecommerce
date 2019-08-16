@@ -18,4 +18,4 @@ const CustomButton = ({
   </button>
 );
 
-export default CustomButton;
+export default React.memo(CustomButton);
